@@ -17,7 +17,7 @@ public class NotebookPresenter {
     private NoteBookOperation operation;
 
     public NotebookPresenter(NoteBook notebook, FileOperationInterface fileOperations, NotebookView view) {
-        this.notebook = notebook;
+        this.notebook = new NoteBook();
         this.fileOperations = fileOperations;
         this.view = view;
         operation = new NoteBookOperation();
