@@ -9,6 +9,8 @@ public class NoteBook  implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private List<Note> notes;
+
+    public Object getNotes;
     
     public NoteBook() {
         this.notes = new ArrayList<>();
@@ -34,4 +36,7 @@ public class NoteBook  implements Serializable {
         System.out.println();
     }
 
+    public Note getNote(int index) {
+        return notes.get(index);
+    }
 }

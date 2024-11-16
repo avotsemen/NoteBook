@@ -30,8 +30,6 @@ public class ConsoleNotebookView implements NotebookView {
         presenter = new NotebookPresenter(notebook, fileOperations, view);
         this.mainMenu = ConsoleMenu.createMainMenu(this);
     }
-    
-
 
     public void start() {
         while (exit) {
@@ -54,6 +52,7 @@ public class ConsoleNotebookView implements NotebookView {
 
     public void listNotes() {
         mainMenu.createSubMenu();
+        mainMenu.viewNote();
     }
 
     public void safe_load() {
@@ -117,6 +116,26 @@ public class ConsoleNotebookView implements NotebookView {
 
     public void SortByTitle() {
         presenter.sortByTitle();
+    }
+
+    public int getSizeNotebook() {
+        int size = presenter.getSizeNotebook();
+        return size;
+    }
+
+    public void viewNote() {
+        int index;
+        System.out.println("Введите номер заметки:");
+        index = scanner.nextInt();
+        presenter.viewNote(index - 1);
+    }
+
+    public void removeNote() {
+        int index;
+        System.out.println("Введите номер заметки:");
+        index = scanner.nextInt();
+        presenter.removeNote(index - 1);
+        System.out.println("Заметка удалена.");
     }
 
     public void SafeToFile() {

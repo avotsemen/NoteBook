@@ -42,6 +42,14 @@ public class ConsoleMenu {
         return new ConsoleMenu(subCommands, this, consoleNotebookView); // добавление ссылки на родительское меню
     }
 
+    // создание подменю для показа и удаления заметки
+    public ConsoleMenu viewNote() {
+        List<Command> subCommands = List.of(
+                new ViewNote(consoleNotebookView),
+                new RemoveNote(consoleNotebookView));
+        return new ConsoleMenu(subCommands, this, consoleNotebookView); // добавление ссылки на родительское меню
+    }
+
     // метод для отображения меню и обработки выбора пользователя
     public void displayMenu() {
         Scanner scanner = new Scanner(System.in);
@@ -69,7 +77,13 @@ public class ConsoleMenu {
             if (selectedCommand instanceof ImportExport) {
                 createFMMenu().displayMenu();
             } else if (selectedCommand instanceof ListNotes) {
-                createSubMenu().displayMenu();
+                int sizeNotebook = consoleNotebookView.getSizeNotebook();
+                if (sizeNotebook > 0) {
+                    createSubMenu().displayMenu();
+                    viewNote().displayMenu();
+                }else{
+                    System.out.println("Список заметок пуст");
+                }
             }
         } else {
             System.out.println("Неверный выбор. Попробуйте снова.");

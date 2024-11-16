@@ -56,6 +56,16 @@ public class NotebookPresenter {
         Collections.sort(notebook.getNotes(), (p1, p2) -> p1.getTitle().compareTo(p2.getTitle()));
         listNotes();
 
+
+    }
+    
+    public void viewNote(int i) {
+        notebook.getNote(i);
+        
+    }
+
+    public void removeNote(int i) {
+        notebook.removeNote(i);
     }
 
     public void sortByDate() {
@@ -69,4 +79,10 @@ public class NotebookPresenter {
         });
         listNotes();
     }
+
+    public int getSizeNotebook() {
+       int size = notebook.getNotes().size();
+       return size;
+    }
+
 }

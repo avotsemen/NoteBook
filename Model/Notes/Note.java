@@ -75,6 +75,6 @@ public class Note implements Serializable {
                 "время: " + time + "\n" +
                 "заголовок: '" + title + '\'' + "\n" +
                 "описание: '" + description + '\'' +
-                '}';
+                "\n";
     }
 }
