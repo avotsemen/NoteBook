@@ -15,9 +15,7 @@ public class ConsoleNotebookView implements NotebookView {
     private Scanner scanner;
     private NotebookPresenter presenter;
     private boolean exit;
-    private ConsoleMenu menu;
-    private ConsoleSubMenu subMenu;
-    private ConsoleMenuFM FMMenu;
+    private ConsoleMenu mainMenu;
     private NoteBook notebook;
     private FileOperations fileOperations;
     private NotebookView view;
@@ -25,69 +23,25 @@ public class ConsoleNotebookView implements NotebookView {
     public ConsoleNotebookView() {
 
         this.exit = true;
-        notebook = new NoteBook();
+        this.notebook = new NoteBook();
         fileOperations = new FileOperations();
-        view = this;
+        this.view = this;
         scanner = new Scanner(System.in);
         presenter = new NotebookPresenter(notebook, fileOperations, view);
-        menu = new ConsoleMenu(this);
-        subMenu = new ConsoleSubMenu(this);
-        FMMenu = new ConsoleMenuFM(this);
+        this.mainMenu = ConsoleMenu.createMainMenu(this);
     }
+    
 
 
-    @Override
     public void start() {
         while (exit) {
-
-            System.out.println("Выберите действие:");
-            printMenu();
-        }
-    }
-
-    private void printMenu() {
-        printNote(menu.menu());
-        execute();
-    }
-
-    private void execute() {
-        String line = scanner.nextLine();
-        if (checkTextForInt(line)) {
-            int numCommands = Integer.parseInt(line);
-            if (checkCommand(numCommands)) {
-                menu.execute(numCommands);
+            if (mainMenu != null) {
+                mainMenu.displayMenu();
+            } else {
+                System.out.println("Ошибка: меню не инициализировано.");
+                exit();
             }
         }
-    }
-
-    private void executeSubMenu() {
-        String line = scanner.nextLine();
-        if (checkTextForInt(line)) {
-            int numCommands = Integer.parseInt(line);
-            if (checkCommand(numCommands)) {
-                subMenu.execute(numCommands);
-            }
-        }
-    }
-    private void executeFMMenu() {
-        String line = scanner.nextLine();
-        if (checkTextForInt(line)) {
-            int numCommands = Integer.parseInt(line);
-            if (checkCommand(numCommands)) {
-                FMMenu.execute(numCommands);
-            }
-        }
-    }
-    private boolean checkCommand(int numCommands) {
-        if (numCommands <= menu.getSize()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean checkTextForInt(String text) {
-        return text.matches("[0-9]+");
     }
 
     public void showError(String message) {
@@ -99,8 +53,11 @@ public class ConsoleNotebookView implements NotebookView {
     }
 
     public void listNotes() {
-        printNote(subMenu.subMenu());
-        executeSubMenu();
+        mainMenu.createSubMenu();
+    }
+
+    public void safe_load() {
+        mainMenu.createFMMenu();
     }
 
     @Override
@@ -164,11 +121,6 @@ public class ConsoleNotebookView implements NotebookView {
 
     public void SafeToFile() {
         presenter.safeToFile();
-    }
-
-    public void safe_load() {
-        printNote(FMMenu.FMMenu());
-        executeFMMenu();
     }
 
     public void LoadFromFile() {

@@ -2,7 +2,7 @@ package oop.NoteBook.View.command;
 
 import oop.NoteBook.View.ConsoleNotebookView;
 
-public class LoadFromFile extends ImportExport{
+public class LoadFromFile extends Command{
 
     public LoadFromFile(ConsoleNotebookView consoleNotebookView) {
         super(consoleNotebookView);

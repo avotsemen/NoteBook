@@ -2,7 +2,7 @@ package oop.NoteBook.View.command;
 
 import oop.NoteBook.View.ConsoleNotebookView;
 
-public class SortByDate extends ListNotes {
+public class SortByDate extends Command {
 
 public SortByDate(ConsoleNotebookView consoleNotebookView) {
         super(consoleNotebookView);
